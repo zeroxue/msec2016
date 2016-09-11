@@ -34,7 +34,16 @@ public class OperationMultiply extends BinaryOperation {
 	@Override
 	public String toString() {
 
-		return "MUL{" + left + "," + right + "}";
+
+		String ls = left.toString();
+		String rs = right.toString();
+		if(ls.compareTo(rs) < 0){ //ls is small in lexicographical order
+			return "MUL{" + left + "," + right + "}";
+		}
+		else {
+			return "MUL{" + right + "," + left + "}";
+		}
+
 	}
 
 }
