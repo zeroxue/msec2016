@@ -6,6 +6,13 @@
 
   <display-name>SpringMVCDemo Web Application</display-name>
 
+
+  <!-- 404 页面 -->
+  <error-page>
+    <error-code>404</error-code>
+    <location>/WEB-INF/pages/error.jsp</location>
+  </error-page>
+
   <servlet>
     <servlet-name>mvc-dispatcher</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
