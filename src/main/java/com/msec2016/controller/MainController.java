@@ -34,7 +34,7 @@ public class MainController {
 
     @RequestMapping("gg")
     @ResponseBody
-    public User returnGG() {
+    public Object returnGG() {
         return "Well done";
     }
 
