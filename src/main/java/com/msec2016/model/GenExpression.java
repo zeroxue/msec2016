@@ -27,7 +27,7 @@ public class GenExpression {
         }
 
 
-        String operator = "[\\+\\-\\*\\/]"; //operator
+        String operator = "[\\+\\-\\*\\#]"; //operator
 
 
         String reStr = realNum + "(" + operator + realNum + ")+";
