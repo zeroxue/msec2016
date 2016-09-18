@@ -53,6 +53,10 @@
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.39" />
           <element id="library" level="project" name="Maven: com.github.mifmif:generex:1.0.0" />
           <element id="library" level="project" name="Maven: dk.brics.automaton:automaton:1.11-8" />
+          <element id="library" level="project" name="Maven: org.assertj:assertj-core-java8:1.0.0m1" />
+          <element id="library" level="project" name="Maven: org.testng:testng:6.9.10" />
+          <element id="library" level="project" name="Maven: com.beust:jcommander:1.48" />
+          <element id="library" level="project" name="Maven: org.beanshell:bsh:2.0b4" />
         </element>
       </element>
       <element id="directory" name="META-INF">
