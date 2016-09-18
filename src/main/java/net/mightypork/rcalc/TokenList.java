@@ -2,6 +2,7 @@ package net.mightypork.rcalc;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 import net.mightypork.rcalc.operations.Operation;
@@ -61,8 +62,15 @@ public class TokenList extends ArrayList<IToken> implements IToken {
 			//    in the correct order ^ * / + -
 			extractOperator(TokenOperatorFactorial.class);
 			extractOperator(TokenOperatorPower.class);
-			extractOperator(TokenOperatorMultiply.class);
-			extractOperator(TokenOperatorDivide.class);
+			extractOperator(TokenOperatorDivideFraction.class);	//addby miaodx to first deal with fraction
+//			extractOperator(TokenOperatorMultiply.class);
+//			extractOperator(TokenOperatorDivide.class);
+
+			List multiplyOrDivide =  new ArrayList<Class<? extends IOperatorToken>>();
+			multiplyOrDivide.add(TokenOperatorMultiply.class);
+			multiplyOrDivide.add(TokenOperatorDivide.class);
+
+			extractOperator(multiplyOrDivide);
 			extractOperator(TokenOperatorModulo.class);
 			extractOperator(TokenOperatorAdd.class);
 			extractOperator(TokenOperatorSubtract.class);
@@ -98,6 +106,89 @@ public class TokenList extends ArrayList<IToken> implements IToken {
 		return (IEvaluableToken) this.get(0); // checked earlier
 	}
 
+
+
+	private void extractOperator(List<Class<? extends IOperatorToken>> operatorClassList) {{
+
+		Stack<Integer> positions = new Stack<Integer>();
+
+		// find operator positions
+		for (int i = size() - 1; i >= 0; i--) {
+			for(Class<? extends IOperatorToken> operatorClass : operatorClassList){
+				if (operatorClass.isInstance(get(i))) {
+					positions.push(i);
+				}
+			}
+		}
+
+		// offset, used when positions are updated while replacing tokens
+		int offset = 0;
+
+		while (!positions.isEmpty()) {
+
+			// get position of the next token
+			int pos = positions.pop() + offset;
+
+			IToken operatorToken = get(pos);
+
+			if (operatorToken instanceof TokenBinaryOperator) {
+
+				TokenBinaryOperator opToken = (TokenBinaryOperator) operatorToken;
+
+				// get operands
+				TokenList leftArg = get(pos - 1).wrapInTokenList();
+				TokenList rightArg = get(pos + 1).wrapInTokenList();
+
+				// build an operation
+				Operation op = opToken.toOperation(leftArg, rightArg);
+
+				// discard used tokens
+				subList(pos - 1, pos + 2).clear();
+				// put back the operation
+				add(pos - 1, op);
+				// shift offset
+				offset -= 2;
+
+			} else if (operatorToken instanceof TokenUnaryOperatorLeft) {
+
+				TokenUnaryOperatorLeft opToken = (TokenUnaryOperatorLeft) operatorToken;
+
+				// get operand
+				TokenList leftArg = get(pos - 1).wrapInTokenList();
+
+				// build an operation
+				Operation op = opToken.toOperation(leftArg);
+
+				// discard used tokens
+				subList(pos - 1, pos + 1).clear();
+				// put back the operation
+				add(pos - 1, op);
+				// shift offset
+				offset -= 1;
+
+			} else if (operatorToken instanceof TokenUnaryOperatorRight) {
+
+				TokenUnaryOperatorRight opToken = (TokenUnaryOperatorRight) operatorToken;
+
+				// variable for left operand
+				TokenList rightArg = get(pos + 1).wrapInTokenList();
+
+				// build an operation
+				Operation op = opToken.toOperation(rightArg);
+
+				// discard used tokens
+				subList(pos, pos + 2).clear();
+				// put back the operation
+				add(pos, op);
+				// shift offset
+				offset -= 1;
+			}
+		}
+	}
+
+
+
+	}
 
 	/**
 	 * Find tokens of given operator class, and convert them to the operations
