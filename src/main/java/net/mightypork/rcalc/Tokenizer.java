@@ -58,14 +58,8 @@ public class Tokenizer implements IDebugable {
 	}
 
 
-	/**
-	 * Parse a string to a list of expression tokens
-	 * 
-	 * @param input string with expression to parse
-	 * @return token list
-	 */
-	public TokenList tokenize(String input) {
 
+	public String formatStr(String input){
 		// discard whitespace
 		input = input.replaceAll("\\s", "");
 
@@ -86,6 +80,18 @@ public class Tokenizer implements IDebugable {
 		// enclose ^ left operand in parentheses
 		input = input.replaceAll("([0-9.]+[!]?)\\^", "($1)^");
 		if (debug && deepDebug) System.out.println("\nWrap left numeric operand of '^' with parentheses\n" + input);
+
+		//add by miaodx:20160911,18:58
+		// ATTENTION:"1/2/3/4" -> "(1/2)/(3/4)",this can be right or wrong
+		// enclose / operand in two parentheses
+		input = input.replaceAll("([0-9.]+[!]?)/(([0-9.]+[!]?))", "(($1)/($2))");
+		if (debug && deepDebug) System.out.println("\nWrap left numeric operand of '^' with parentheses\n" + input);
+
+		//add by miaodx:20160911,19:31
+		// change "'"(带分数) to add, "1'1/2" -> "1+1/2"
+		input = input.replaceAll("([0-9.]+[!]?)'(([^+\\-*#]*)?)", "($1+$2)");
+		if (debug && deepDebug) System.out.println("\nWrap left numeric operand of '^' with parentheses\n" + input);
+
 
 		// add multiplication operator for implicit multiplication
 		input = input.replaceAll("(?<=[0-9)!])(?=[(])", "*"); // )( -> )*(
@@ -121,6 +127,19 @@ public class Tokenizer implements IDebugable {
 
 		if (debug) System.out.println("\nParsing tokens...");
 
+		return input;
+	}
+
+	/**
+	 * Parse a string to a list of expression tokens
+	 * 
+	 * @param inputStr string with expression to parse
+	 * @return token list
+	 */
+	public TokenList tokenize(String inputStr) {
+
+		String input = formatStr(inputStr);
+
 		TokenList list = new TokenList();
 
 		String buffer = "";
@@ -149,8 +168,11 @@ public class Tokenizer implements IDebugable {
 					case '*':
 						list.add(new TokenOperatorMultiply());
 						break;
-					case '/':
+					case '#':
 						list.add(new TokenOperatorDivide());
+						break;
+					case '/':
+						list.add(new TokenOperatorDivideFraction());
 						break;
 					case '+':
 						list.add(new TokenOperatorAdd());

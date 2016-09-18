@@ -16,7 +16,7 @@ public class TokenOperatorDivide extends TokenBinaryOperator {
 	@Override
 	public String toString() {
 
-		return "/";
+		return "#";
 	}
 
 

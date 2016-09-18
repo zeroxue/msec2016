@@ -120,7 +120,19 @@ public class Fraction implements IEvaluableToken {
 			} catch (Exception e) {
 				throw new ParseError("Invalid number format.");
 			}
-		} else {
+		}else if(number.indexOf("'") > 0){
+			String[] parts = number.split("'");
+			try {
+				Fraction f1 = new Fraction(parts[0]).add(new Fraction(parts[1]));
+				this.numerator = f1.numerator;
+				this.denominator = f1.denominator;
+				this.simplify_ip();
+			}catch (Exception e){
+				throw new ParseError("Invalid number format.");
+			}
+
+		}
+		else {
 			this.numerator = new BigInteger(number);
 			this.denominator = BigInteger.ONE;
 		}
