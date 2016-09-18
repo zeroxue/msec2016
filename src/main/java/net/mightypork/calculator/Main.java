@@ -20,8 +20,8 @@ public class Main {
 
 		if (args.length == 0 || (args.length == 1 && args[0].equals("-i"))) {
 
-			//Runnable task = new CalculatorInteractive();
-			Tests task = new Tests();
+			Runnable task = new CalculatorInteractive();
+			//Tests task = new Tests();
 			task.run();
 
 		} else if (args.length == 1) {
