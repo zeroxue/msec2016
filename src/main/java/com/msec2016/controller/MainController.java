@@ -32,6 +32,11 @@ public class MainController {
         return miao;
     }
 
+    @RequestMapping("gg")
+    @ResponseBody
+    public Object returnGG() {
+        return "Well done";
+    }
 
     @RequestMapping("newProblem")
     @ResponseBody
