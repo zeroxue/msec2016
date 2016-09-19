@@ -3,7 +3,10 @@ package net.mightypork.calculator;
 import com.msec2016.model.Problem;
 import com.msec2016.service.ProblemGeneratorAndSolver;
 import net.mightypork.ReversePolishNotation.ReversePolishNotation;
+import net.mightypork.ReversePolishNotation.ReversePolishNotationWithToken;
 import net.mightypork.rcalc.RCalc;
+import net.mightypork.rcalc.TokenList;
+import net.mightypork.rcalc.Tokenizer;
 import net.mightypork.rcalc.numbers.Fraction;
 
 import java.util.*;
@@ -47,6 +50,26 @@ public class TestViaAssertJ {
         return ans;
     }
 
+    public static Fraction rpntimeWithToken(String s) {
+
+
+        long begin2 = System.currentTimeMillis(); // 这段代码放在程序执行前
+
+        ReversePolishNotationWithToken RPN = new ReversePolishNotationWithToken();
+
+        TokenList s2list = RPN.rpnParseToken2FrationAndOperator(s);
+        System.out.println(s2list);
+
+        Fraction ans = RPN.solver(s2list);
+
+        System.out.println(ans);
+
+        long end2 = System.currentTimeMillis() - begin2; // 这段代码放在程序执行后
+        System.out.println("耗时：" + end2 + "毫秒");
+
+
+        return ans;
+    }
 
     @Test
     public static void testWithKnown() {
@@ -72,6 +95,9 @@ public class TestViaAssertJ {
                 put("2*3*4","24");
                 put("2*3#4","3/2");
                 put("2#3*4","8/3");
+                put("402*8#9-7-297-3+4*4-9#9-2-3+94-4-6*1-77-6+3#9+1#5-5+3-9*2+1-7#3#8#14#5*3",
+                        "2057/48");
+
             }
         };
         //@formatter:on
@@ -97,8 +123,13 @@ public class TestViaAssertJ {
 
                 System.out.println("rpnans:" + rpnans);
 
+                Fraction rpnansWithToken = rpntimeWithToken(entry.getKey());
+
+                System.out.println("rpnans:" + rpnansWithToken);
+
 
                 assertThat(rpnans).isEqualTo(rcans)
+                        .isEqualTo(rpnansWithToken)
                         .isEqualTo(new Fraction(entry.getValue()))
                 ;
 
