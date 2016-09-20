@@ -9,21 +9,20 @@ public class GenExpression {
 
 
     /**
-     *
      * @param justInt produce integer only or fraction
      * @return
      */
-    public Generex getGenExpression(boolean justInt){
+    public Generex getGenExpression(boolean justInt) {
 
         String integer = "[1-9]\\d{0,2}";
         String justFrac = "\\(" + integer + "/" + integer + "\\)"; // fraction,the numerator and denominator should not be too big
 
 
         String realNum = "";
-        if(justInt){
+        if (justInt) {
             realNum = integer;
-        }else{
-            realNum = "(" + justFrac + "|" + integer + ")" ;   //integer or justFrac
+        } else {
+            realNum = "(" + justFrac + "|" + integer + ")";   //integer or justFrac
         }
 
 
@@ -39,7 +38,7 @@ public class GenExpression {
 
 
     //fraction is by default
-    public Generex getGenExpression(){
+    public Generex getGenExpression() {
         return getGenExpression(false);
     }
 

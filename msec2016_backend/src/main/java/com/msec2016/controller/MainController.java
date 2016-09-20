@@ -1,4 +1,5 @@
 package com.msec2016.controller;
+
 import com.msec2016.model.Problem;
 import com.msec2016.service.ProblemGeneratorAndSolver;
 import com.msec2016.test.User;
@@ -18,7 +19,7 @@ import java.util.logging.Logger;
 public class MainController {
     Logger logger = Logger.getLogger("MainController");
 
-    ProblemGeneratorAndSolver pgas =  ProblemGeneratorAndSolver.INSTANCE;
+    ProblemGeneratorAndSolver pgas = ProblemGeneratorAndSolver.INSTANCE;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
@@ -28,7 +29,7 @@ public class MainController {
     @RequestMapping("user")
     @ResponseBody
     public User returnUser() {
-        User miao = new User("miaodx",21);
+        User miao = new User("miaodx", 21);
         return miao;
     }
 
@@ -79,21 +80,24 @@ public class MainController {
         return ps;
     }
 
-    @RequestMapping(value="/newUser/{username}/{age}",method=RequestMethod.GET)
+    @RequestMapping(value = "/newUser/{username}/{age}", method = RequestMethod.GET)
     @ResponseBody
-    public User show(@PathVariable String username,@PathVariable int age) {
+    public User show(@PathVariable String username, @PathVariable int age) {
         logger.info("newUser got " + username + "," + age);
-        return  new User(username,age);
+        return new User(username, age);
     }
 
-    @RequestMapping(value="/newUserOlder/{username}/{age}",method=RequestMethod.GET)
+    @RequestMapping(value = "/newUserOlder/{username}/{age}", method = RequestMethod.GET)
     @ResponseBody
-    public User show2(@PathVariable String username,@PathVariable String age) {
-        return  new User(username,Integer.parseInt(age+1));
+    public User show2(@PathVariable String username, @PathVariable String age) {
+        return new User(username, Integer.parseInt(age + 1));
     }
 }
-@Controller class UrlNotFoundController {
-    @RequestMapping("*") public String test404(){
-            return "error";
+
+@Controller
+class UrlNotFoundController {
+    @RequestMapping("*")
+    public String test404() {
+        return "error";
     }
 }

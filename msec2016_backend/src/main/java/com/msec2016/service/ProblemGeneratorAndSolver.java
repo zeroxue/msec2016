@@ -14,17 +14,15 @@ import java.util.List;
  */
 public enum ProblemGeneratorAndSolver {
     INSTANCE;
-    private ProblemGeneratorAndSolver(){
-        rc.setDebug(true);
-    }
-
 
     private RCalc rc = new RCalc();
     private Generex genFraction = new GenExpression().getGenExpression();
     private Generex genJustInt = new GenExpression().getGenExpression(true);
+    private ProblemGeneratorAndSolver() {
+        rc.setDebug(true);
+    }
 
-
-    public void solve(Problem problem){
+    public void solve(Problem problem) {
 
         Fraction ans = rc.evaluate(problem.getDefinaton());
 
@@ -32,52 +30,52 @@ public enum ProblemGeneratorAndSolver {
     }
 
 
-    public void solveAll(List<Problem> problems){
-        for(Problem p: problems){
+    public void solveAll(List<Problem> problems) {
+        for (Problem p : problems) {
             Fraction ans = rc.evaluate(p.getDefinaton());
             p.setAnswer(ans.toString());
         }
     }
 
 
-    public Problem newProblem(){
-        return newProblems(1,1,10,false).get(0);
+    public Problem newProblem() {
+        return newProblems(1, 1, 10, false).get(0);
     }
 
-    public Problem newProblemJustInt(){
-        return newProblems(1,1,10,true).get(0);
-    }
-
-
-    public List<Problem> newProblems(int num){
-        return newProblems(num,1,10,false);
-    }
-
-    public List<Problem> newProblems(int num,int min,int max){
-        return newProblems(num,min,max,false);
-    }
-
-    public List<Problem> newProblemsJustInt(int num){
-        return newProblems(num,1,10,true);
-    }
-
-    public List<Problem> newProblemsJustInt(int num,int min,int max){
-        return newProblems(num,min,max,true);
+    public Problem newProblemJustInt() {
+        return newProblems(1, 1, 10, true).get(0);
     }
 
 
-    public List<Problem> newProblems(int num,int min ,int max,boolean justInt ){
+    public List<Problem> newProblems(int num) {
+        return newProblems(num, 1, 10, false);
+    }
 
-        Generex genE ;
-        if(justInt){
+    public List<Problem> newProblems(int num, int min, int max) {
+        return newProblems(num, min, max, false);
+    }
+
+    public List<Problem> newProblemsJustInt(int num) {
+        return newProblems(num, 1, 10, true);
+    }
+
+    public List<Problem> newProblemsJustInt(int num, int min, int max) {
+        return newProblems(num, min, max, true);
+    }
+
+
+    public List<Problem> newProblems(int num, int min, int max, boolean justInt) {
+
+        Generex genE;
+        if (justInt) {
             genE = genJustInt;
-        }else {
+        } else {
             genE = genFraction;
         }
 
         List<Problem> rtn = new ArrayList<>();
-        for(int i = 0;i < num; i++){
-             rtn.add(new Problem(genE.random(min,max)));
+        for (int i = 0; i < num; i++) {
+            rtn.add(new Problem(genE.random(min, max)));
         }
 
         return rtn;

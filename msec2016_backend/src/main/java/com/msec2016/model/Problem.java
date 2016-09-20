@@ -10,12 +10,12 @@ public class Problem {
     private String definaton = "";
     private String answer = "";
 
-    public Problem(String _definaton){
+    public Problem(String _definaton) {
         this.definaton = _definaton;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return JSON.toJSONString(this);
     }
 

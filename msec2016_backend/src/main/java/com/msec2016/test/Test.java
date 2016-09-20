@@ -1,6 +1,5 @@
 package com.msec2016.test;
 
-import com.mifmif.common.regex.Generex;
 import com.msec2016.model.Problem;
 import com.msec2016.service.ProblemGeneratorAndSolver;
 
@@ -12,12 +11,11 @@ import java.util.List;
 public class Test {
 
 
-
     public static void main(String[] args) {
 
         ProblemGeneratorAndSolver solver = ProblemGeneratorAndSolver.INSTANCE;
 
-        List<Problem> p1 = solver.newProblemsJustInt(1,200,200);
+        List<Problem> p1 = solver.newProblemsJustInt(1, 200, 200);
 
         System.out.println(p1.get(0).getDefinaton());
         System.out.println(p1.get(0).getDefinaton().length());
@@ -25,7 +23,6 @@ public class Test {
         solver.solveAll(p1);
 
         System.out.println(p1);
-
 
 
     }
