@@ -14,7 +14,9 @@ import java.util.*;
  */
 public class ReversePolishNotationWithToken {
 
-    /** Tokenizer instance */
+    /**
+     * Tokenizer instance
+     */
     private Tokenizer tokenizer = new Tokenizer();
 
 
@@ -30,24 +32,25 @@ public class ReversePolishNotationWithToken {
     /**
      * use IToken not IOperatorToken,for TokenParenthesisLeft/Right is not IOperatorToken
      */
-    private static Map<Class<? extends IToken>,Integer> operationPriority = new HashMap<Class<? extends IToken>, Integer>(){
+    private static Map<Class<? extends IToken>, Integer> operationPriority = new HashMap<Class<? extends IToken>, Integer>() {
         {
-            put(TokenOperatorBase.class,-1);    // the init element,just a flag that this is the least priority
+            put(TokenOperatorBase.class, -1);    // the init element,just a flag that this is the least priority
 
-            put(TokenOperatorAdd.class,1);put(TokenOperatorSubtract.class,1);
-            put(TokenOperatorMultiply.class,2);put(TokenOperatorDivide.class,2);
-            put(TokenOperatorDivideFraction.class,3); //fraction
+            put(TokenOperatorAdd.class, 1);
+            put(TokenOperatorSubtract.class, 1);
+            put(TokenOperatorMultiply.class, 2);
+            put(TokenOperatorDivide.class, 2);
+            put(TokenOperatorDivideFraction.class, 3); //fraction
 
-            put(TokenParenthesisLeft.class,0);put(TokenParenthesisRight.class,0); //deal with parenthesis separately
+            put(TokenParenthesisLeft.class, 0);
+            put(TokenParenthesisRight.class, 0); //deal with parenthesis separately
         }
     };
 
 
-
-    static boolean operationHigher(IToken a,IToken b){
+    static boolean operationHigher(IToken a, IToken b) {
         return operationPriority.get(a.getClass()) > operationPriority.get(b.getClass());
     }
-
 
 
     public static void main(String[] args) {
@@ -69,8 +72,7 @@ public class ReversePolishNotationWithToken {
         IToken l = new TokenOperatorMultiply();
         IToken a = new TokenOperatorAdd();
 
-        System.out.println("We got:" + operationHigher(l,a));
-
+        System.out.println("We got:" + operationHigher(l, a));
 
 
         ReversePolishNotationWithToken rpmwt = new ReversePolishNotationWithToken();
@@ -90,10 +92,11 @@ public class ReversePolishNotationWithToken {
 
     /**
      * RPN solver
+     *
      * @param input
      * @return
      */
-    public Fraction solver(TokenList input){
+    public Fraction solver(TokenList input) {
 
         Stack<String> syntaxTree = new Stack<>();
 
@@ -102,9 +105,9 @@ public class ReversePolishNotationWithToken {
         Fraction tf = new Fraction(1);
 
 
-        for(IToken token: input){
+        for (IToken token : input) {
 
-            if(token instanceof TokenOperator){ //operator,take care of the ORDER!!!
+            if (token instanceof TokenOperator) { //operator,take care of the ORDER!!!
 
                 String s2 = syntaxTree.pop();
                 String s1 = syntaxTree.pop();
@@ -113,24 +116,26 @@ public class ReversePolishNotationWithToken {
                 Fraction f1 = fracStack.pop();
 
 
-                String tmp =  "{"+token+","+s1+","+s2+"}";
+                String tmp = "{" + token + "," + s1 + "," + s2 + "}";
                 syntaxTree.push(tmp);
 
 
-                if(token instanceof TokenOperatorAdd){
+                if (token instanceof TokenOperatorAdd) {
                     tf = f1.add(f2);
-                }else if(token instanceof TokenOperatorSubtract){
+                } else if (token instanceof TokenOperatorSubtract) {
                     tf = f1.subtract(f2);
-                }else if(token instanceof TokenOperatorMultiply){
+                } else if (token instanceof TokenOperatorMultiply) {
                     tf = f1.multiply(f2);
-                }else if(token instanceof TokenOperatorDivide){
+                } else if (token instanceof TokenOperatorDivide) {
+                    tf = f1.divide(f2);
+                } else if (token instanceof TokenOperatorDivideFraction) {
                     tf = f1.divide(f2);
                 }
 
 
                 fracStack.push(tf);
 
-            }else {
+            } else {
                 syntaxTree.push(token.toString());
                 fracStack.push(new Fraction(token.toString()));
             }
@@ -143,7 +148,11 @@ public class ReversePolishNotationWithToken {
     }
 
 
-    public TokenList rpnParseToken2FrationAndOperator(String input){
+    public TokenList rpnParseToken2FrationAndOperator(String inputStr) {
+
+        String input = tokenizer.formatStr(inputStr);
+        System.out.println("after format: " + input);
+
         TokenList tokenList = tokenizer.tokenize(input);
 
 
@@ -151,53 +160,44 @@ public class ReversePolishNotationWithToken {
     }
 
 
-
-
-     private TokenList rpnParseToken2FrationAndOperator(TokenList list){
+    private TokenList rpnParseToken2FrationAndOperator(TokenList list) {
         Stack<IToken> operationStack = new Stack<>();   //
         operationStack.push(new TokenOperatorBase()); //init the operation stack
 
         TokenList rpnList = new TokenList();
 
 
+        for (IToken token : list) {
+            if (token instanceof Fraction) { //already a fraction,just put it in
+                rpnList.add(token);
+            } else if (token instanceof TokenParenthesisLeft) {
+                operationStack.push(token);
+            } else if (token instanceof TokenParenthesisRight) {
+                while (operationStack.peek() instanceof TokenParenthesisLeft == false) {
+                    rpnList.add(operationStack.pop());
+                }
+                operationStack.pop(); //pop TokenParenthesisLeft away.
+            } else {
+                if (operationHigher(token, operationStack.peek())) {
+                    operationStack.push(token);
+                } else {
+                    while (operationHigher(token, operationStack.peek()) == false) {
+                        rpnList.add(operationStack.pop());
+                    }
 
-         for(IToken token : list){
-             if(token instanceof Fraction){ //already a fraction,just put it in
-                 rpnList.add(token);
-             }
-             else if(token instanceof TokenParenthesisLeft){
-                 rpnList.add(token);
-             }
-             else if(token instanceof TokenParenthesisRight){
-                 while (operationStack.peek() instanceof TokenParenthesisLeft == false){
-                     rpnList.add(operationStack.pop());
-                 }
-             }
+                    operationStack.push(token);
+                }
+            }
 
-             else {
-                 if(operationHigher(token, operationStack.peek())){
-                     operationStack.push(token);
-                 }
-                 else {
-                     while (operationHigher(token, operationStack.peek()) == false){
-                         rpnList.add(operationStack.pop());
-                     }
-
-                     operationStack.push(token);
-                 }
-             }
-
-         }
+        }
 
 
-         while (operationStack.peek() instanceof TokenOperatorBase == false){
-             rpnList.add(operationStack.pop());
-         }
+        while (operationStack.peek() instanceof TokenOperatorBase == false) {
+            rpnList.add(operationStack.pop());
+        }
 
 
-         return rpnList;
-
-
+        return rpnList;
 
 
     }

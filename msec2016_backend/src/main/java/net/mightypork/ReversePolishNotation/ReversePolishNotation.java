@@ -1,8 +1,6 @@
 package net.mightypork.ReversePolishNotation;
 
-import com.msec2016.model.Problem;
-import com.msec2016.service.ProblemGeneratorAndSolver;
-import net.mightypork.rcalc.RCalc;
+
 import net.mightypork.rcalc.Tokenizer;
 import net.mightypork.rcalc.numbers.Fraction;
 
@@ -13,21 +11,24 @@ import java.util.*;
  */
 public class ReversePolishNotation {
 
-    private static Map<Character,Integer> operationPriority = new HashMap<Character, Integer>(){
+    private static Map<Character, Integer> operationPriority = new HashMap<Character, Integer>() {
         {
-            put('@',-1);    // the init element
+            put('@', -1);    // the init element
 
-            put('+',1);put('-',1);
-            put('*',2);put('#',2);
-            put('/',3); //fraction
+            put('+', 1);
+            put('-', 1);
+            put('*', 2);
+            put('#', 2);
+            put('/', 3); //fraction
 
-            put('(',0);put(')',0); //deal with parenthesis separately
+            put('(', 0);
+            put(')', 0); //deal with parenthesis separately
         }
     };
-    static boolean operationHigher(char a,char b){
+
+    static boolean operationHigher(char a, char b) {
         return operationPriority.get(a) > operationPriority.get(b);
     }
-
 
 
     public static void main(String[] args) {
@@ -48,10 +49,11 @@ public class ReversePolishNotation {
 
     /**
      * RPN solver
+     *
      * @param input
      * @return
      */
-    public Fraction solver(List<String> input){
+    public Fraction solver(List<String> input) {
 
         Stack<String> syntaxTree = new Stack<>();
 
@@ -60,8 +62,8 @@ public class ReversePolishNotation {
         Fraction tf = new Fraction(1);
 
 
-        for(String s: input){
-            if("+-*#".contains(s)){ //operator,take care of the ORDER!!!
+        for (String s : input) {
+            if ("+*#/".contains(s)) { //operator,take care of the ORDER!!!
 
                 String s2 = syntaxTree.pop();
                 String s1 = syntaxTree.pop();
@@ -70,19 +72,28 @@ public class ReversePolishNotation {
                 Fraction f1 = fracStack.pop();
 
 
-                String tmp =  "{"+s+","+s1+","+s2+"}";
+                String tmp = "{" + s + "," + s1 + "," + s2 + "}";
                 syntaxTree.push(tmp);
 
-                switch (s){
-                    case "+":tf = f1.add(f2);break;
-                    case "-":tf = f1.subtract(f2);break;
-                    case "*":tf = f1.multiply(f2);break;
-                    case "#":tf = f1.divide(f2);break;
+                switch (s) {
+                    case "+":
+                        tf = f1.add(f2);
+                        break;
+                    //case "-":tf = f1.subtract(f2);break; //we have changed '-' to
+                    case "*":
+                        tf = f1.multiply(f2);
+                        break;
+                    case "#":
+                        tf = f1.divide(f2);
+                        break;
+                    case "/":
+                        tf = f1.divide(f2);
+                        break;  //deal with fraction
                 }
 
                 fracStack.push(tf);
 
-            }else {
+            } else {
                 syntaxTree.push(s);
                 fracStack.push(new Fraction(s));
             }
@@ -97,10 +108,11 @@ public class ReversePolishNotation {
 
     /**
      * Do not deal with so many chanced errors.Just Make things run,the faster the better.
+     *
      * @param inputStr
      * @return
      */
-     public List<String> rpn(String inputStr){
+    public List<String> rpn(String inputStr) {
         Stack<Character> operationStack = new Stack<>();
         operationStack.push('@');
 
@@ -109,33 +121,45 @@ public class ReversePolishNotation {
 
           /* tokenizer.formatStr will format the string*/
         Tokenizer tokenizer = new Tokenizer();
-         //String input =  tokenizer.formatStr(inputStr);
+        String input = tokenizer.formatStr(inputStr);
+        System.out.println("after format: " + input);
 
-         String input = inputStr;
+        //String input = inputStr;
 
         String tmp = "";
-        for(int i = 0;i < input.length(); i++){
+        for (int i = 0; i < input.length(); i++) {
             char ch = input.charAt(i);
-            if("+-*#()".indexOf(ch) == -1){ //not operator or parenthesis
-                tmp += ch;
-            }else if(ch == '('){
-                operationStack.push(ch);
-            }else if(ch == ')'){
 
-                while (operationStack.peek() != '('){
+            if ("+*#()/'".indexOf(ch) == -1) {
+                //not operator or parenthesis or '/'fraction and "'"(带分数),and do not deal with '-' at all,
+                // for we have deal with it before in the tokenizer.formatStr() funtion
+                tmp += ch;
+                continue;
+            } else if (!tmp.equals("")) {
+                numArr.add(tmp);
+                tmp = "";
+            }
+
+
+            if (ch == '(') {
+                operationStack.push(ch);
+            } else if (ch == ')') {
+
+                while (operationStack.peek() != '(') {
                     numArr.add(operationStack.pop().toString());
                 }
 
                 operationStack.pop();//pop '(' away
-            }
-            else{ // +-*/ operator
-                numArr.add(tmp);
-                tmp = "";
+            } else { // +-*# operator and /(fraction)
 
-                if(operationHigher(ch, operationStack.peek())){
+                if (operationHigher(ch, operationStack.peek())) {
                     operationStack.push(ch);
-                }else {
-                    while (operationHigher(ch, operationStack.peek()) == false){
+                } else {
+                    while (operationStack.peek() != '(' &&
+                            operationHigher(ch, operationStack.peek()) == false) {
+                        //I made it wrong,if the stack peek is '(',should stop. "2+(2*3)" should be "2 2 3 * +",not "2 2 * 3 +"
+
+
                         numArr.add(operationStack.pop().toString());
                     }
 
@@ -144,9 +168,13 @@ public class ReversePolishNotation {
             }
         }
 
-         numArr.add(tmp);tmp="";    //special cases: input="1"
+        //put the last num into account,"1+2"->"1 2" not "1" ('+' is pop out below)
+        if (!tmp.equals("")) {
+            numArr.add(tmp);
+            tmp = "";
+        }
 
-        while (operationStack.peek() != '@'){
+        while (operationStack.peek() != '@') {
             numArr.add(operationStack.pop().toString());
         }
 
