@@ -108,6 +108,8 @@ public class TestViaAssertJ {
                 put("2+(2*3)","8");
                 put("(1+2)","3");
 
+                put("1/2/3/4","1/24");
+
             }
         };
         //@formatter:on
