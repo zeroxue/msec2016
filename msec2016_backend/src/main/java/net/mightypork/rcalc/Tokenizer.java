@@ -81,11 +81,15 @@ public class Tokenizer implements IDebugable {
 		input = input.replaceAll("([0-9.]+[!]?)\\^", "($1)^");
 		if (debug && deepDebug) System.out.println("\nWrap left numeric operand of '^' with parentheses\n" + input);
 
+
+		/** to avoid unnecessary issues,choose to unapply this change
 		//add by miaodx:20160911,18:58
 		// ATTENTION:"1/2/3/4" -> "(1/2)/(3/4)",this can be right or wrong
 		// enclose / operand in two parentheses
 		input = input.replaceAll("([0-9.]+[!]?)/(([0-9.]+[!]?))", "(($1)/($2))");
 		if (debug && deepDebug) System.out.println("\nWrap left numeric operand of '^' with parentheses\n" + input);
+		*/
+
 
 		//add by miaodx:20160911,19:31
 		// change "'"(带分数) to add, "1'1/2" -> "1+1/2"
@@ -113,7 +117,7 @@ public class Tokenizer implements IDebugable {
 		input = outputBuffer.toString();
 		if (debug && deepDebug) System.out.println("\nNormalize sequences of '+' and '-'\n" + input);
 
-		// turn '-' to '+-' between numbers
+//		// turn '-' to '+-' between numbers
 		input = input.replaceAll("(?<=[0-9)!])-(?=[0-9.])", "+-");
 		if (debug && deepDebug) System.out.println("\n'-' to '+-' between numbers\n" + input);
 
@@ -124,6 +128,9 @@ public class Tokenizer implements IDebugable {
 		// discard useless + signs
 		input = input.replaceAll("(?<=[^)0-9!]|^)\\+", "");
 		if (debug && deepDebug) System.out.println("\nDiscard '+' at beginning of scope\n" + input);
+
+
+		if (debug) System.out.println("\nFormated input:" + input);
 
 		if (debug) System.out.println("\nParsing tokens...");
 
