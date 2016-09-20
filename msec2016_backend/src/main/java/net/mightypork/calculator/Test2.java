@@ -1,6 +1,5 @@
 package net.mightypork.calculator;
 
-import net.mightypork.rcalc.RCalc;
 import net.mightypork.rcalc.numbers.Fraction;
 
 /**
@@ -11,6 +10,11 @@ public class Test2 {
 
     public static void main(String[] args) {
         System.out.println("Annoying");
+
+        Fraction f = new Fraction("3").divide(new Fraction("-2"));
+
+        System.out.println(f);
+
     }
 
 }

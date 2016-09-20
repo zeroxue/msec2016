@@ -82,6 +82,8 @@ public class TestViaAssertJ {
         Map<String, String> testCases = new LinkedHashMap<String, String>() {
             {
                 // Parser unit test
+                put("1'1/2","3/2");
+                put("3/-2","-3/2");
                 put("1+2", "3");
                 put("1-2", "-1");
                 put("2*3", "6");
@@ -97,6 +99,14 @@ public class TestViaAssertJ {
                 put("2#3*4","8/3");
                 put("402*8#9-7-297-3+4*4-9#9-2-3+94-4-6*1-77-6+3#9+1#5-5+3-9*2+1-7#3#8#14#5*3",
                         "2057/48");
+
+                put("3#2","3/2");
+                put("2#1/2","4");
+                put("1#2+3/4","5/4");
+
+                put("2#1'1/2","4/3");
+                put("2+(2*3)","8");
+                put("(1+2)","3");
 
             }
         };
@@ -114,28 +124,37 @@ public class TestViaAssertJ {
                 System.out.println("IN: " + entry.getKey());
 
 
+                System.out.println("The original soler:");
+
                 Fraction rcans = rc.evaluate(entry.getKey());
 
                 System.out.println("rcans:" + rcans);
 
+                System.out.println("The rpn solver:");
 
                 Fraction rpnans = rpntime(entry.getKey());
 
                 System.out.println("rpnans:" + rpnans);
+
+
+                System.out.println("The rpn with token");
 
                 Fraction rpnansWithToken = rpntimeWithToken(entry.getKey());
 
                 System.out.println("rpnans:" + rpnansWithToken);
 
 
-                assertThat(rpnans).isEqualTo(rcans)
-                        .isEqualTo(rpnansWithToken)
-                        .isEqualTo(new Fraction(entry.getValue()))
+                assertThat(rcans.toString())
+                        .isEqualTo(rpnans.toString())
+                        .isEqualTo(rpnansWithToken.toString())
+                        .isEqualTo(entry.getValue())
                 ;
 
 
             } catch (Exception e) {
-                System.out.println("ERROR: " + e.getMessage());
+                //System.out.println("ERROR: " + ;);
+                e.printStackTrace();
+                return;
             }
         }
 

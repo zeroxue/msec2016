@@ -63,8 +63,10 @@ public class TokenList extends ArrayList<IToken> implements IToken {
 			extractOperator(TokenOperatorFactorial.class);
 			extractOperator(TokenOperatorPower.class);
 			extractOperator(TokenOperatorDivideFraction.class);	//addby miaodx to first deal with fraction
-//			extractOperator(TokenOperatorMultiply.class);
+
+// 			extractOperator(TokenOperatorMultiply.class);
 //			extractOperator(TokenOperatorDivide.class);
+
 
 			List multiplyOrDivide =  new ArrayList<Class<? extends IOperatorToken>>();
 			multiplyOrDivide.add(TokenOperatorMultiply.class);
