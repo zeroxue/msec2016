@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>四则运算程序</title>
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    </head>
+
+    <body>
+        <div>
+    
+            <p>The best time to plant a tree was a decade ago, followed by now. </p>
+            
+            <p>Good Luck & Have fun</p>
+            
+            
+        </div>
+    </body>
+    
+    
+    <script>
+        
+        //var our_project_base_url = "http://localhost:9900/"
+        var our_project_base_url = "http://demo.tjuwork.win:9000/" //远程服务器
+        
+    
+     function getUser(){
+         
+          $(document).ready(function() {
+                $.ajax({
+                    url: our_project_base_url+"/user"
+                }).then(function(user, status, jqxhr) {
+                   //$('.greeting-id').append(data.name);
+                   //$('.greeting-content').append(data.age);
+                    
+                    alert(user.name + " " + user.age)
+                    
+                   console.log(jqxhr);
+                });
+            });
+     };
+        
+        
+     function newProblems(){
+
+          $(document).ready(function() {
+                $.ajax({
+                    url: our_project_base_url+"/newProblems"
+                }).then(function(problems, status, jqxhr) {
+
+
+                for(let p of problems){
+                   alert(p.definition + "\n" + p.answer)
+                }
+
+
+                console.log(jqxhr);
+                });
+            });
+     };
+        
+    </script>
+    
+    
+     <script>
+         getUser();
+         
+         newProblems();
+         
+    </script>
+
+    
+</html>
