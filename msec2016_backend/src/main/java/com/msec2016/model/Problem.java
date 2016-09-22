@@ -7,11 +7,11 @@ import com.alibaba.fastjson.JSON;
  */
 public class Problem {
 
-    private String definaton = "";
+    private String definition = "";
     private String answer = "";
 
     public Problem(String _definaton) {
-        this.definaton = _definaton;
+        this.definition = _definaton;
     }
 
     @Override
@@ -20,12 +20,12 @@ public class Problem {
     }
 
 
-    public String getDefinaton() {
-        return definaton;
+    public String getDefinition() {
+        return definition;
     }
 
-    public void setDefinaton(String definaton) {
-        this.definaton = definaton;
+    public void setDefinition(String definition) {
+        this.definition = definition;
     }
 
     public String getAnswer() {

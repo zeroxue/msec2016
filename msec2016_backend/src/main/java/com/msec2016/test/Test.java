@@ -17,8 +17,8 @@ public class Test {
 
         List<Problem> p1 = solver.newProblemsJustInt(1, 200, 200);
 
-        System.out.println(p1.get(0).getDefinaton());
-        System.out.println(p1.get(0).getDefinaton().length());
+        System.out.println(p1.get(0).getDefinition());
+        System.out.println(p1.get(0).getDefinition().length());
 
         solver.solveAll(p1);
 

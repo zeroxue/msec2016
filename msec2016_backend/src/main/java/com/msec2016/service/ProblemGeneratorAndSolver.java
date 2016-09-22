@@ -24,7 +24,7 @@ public enum ProblemGeneratorAndSolver {
 
     public void solve(Problem problem) {
 
-        Fraction ans = rc.evaluate(problem.getDefinaton());
+        Fraction ans = rc.evaluate(problem.getDefinition());
 
         problem.setAnswer(ans.toString());
     }
@@ -32,7 +32,7 @@ public enum ProblemGeneratorAndSolver {
 
     public void solveAll(List<Problem> problems) {
         for (Problem p : problems) {
-            Fraction ans = rc.evaluate(p.getDefinaton());
+            Fraction ans = rc.evaluate(p.getDefinition());
             p.setAnswer(ans.toString());
         }
     }
