@@ -12,7 +12,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <jdk.version>1.8</jdk.version>
-    <spring.version>3.1.4.RELEASE</spring.version>
+    <spring.version>4.3.3.RELEASE</spring.version>
     <file_encoding>UTF-8</file_encoding>
     <maven_compiler_plugin_version>3.1</maven_compiler_plugin_version>
     <java_source_version>1.8</java_source_version>
@@ -95,6 +95,20 @@
       <artifactId>spring-webmvc</artifactId>
       <version>${spring.version}</version>
     </dependency>
+
+
+
+      <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot -->
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot</artifactId>
+          <version>1.4.1.RELEASE</version>
+      </dependency>
+
+      <!--<dependency>-->
+          <!--<groupId>org.springframework.boot</groupId>-->
+          <!--<artifactId>spring-boot-starter-web</artifactId>-->
+      <!--</dependency>-->
 
 
     <dependency>

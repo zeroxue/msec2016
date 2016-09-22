@@ -4,10 +4,7 @@ import com.msec2016.model.Problem;
 import com.msec2016.service.ProblemGeneratorAndSolver;
 import com.msec2016.test.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -15,6 +12,8 @@ import java.util.logging.Logger;
 /**
  * Created by miao on 2016/9/6.
  */
+
+@CrossOrigin
 @Controller
 public class MainController {
     Logger logger = Logger.getLogger("MainController");
