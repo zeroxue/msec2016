@@ -1,33 +1,19 @@
-package net.mightypork.ReversePolishNotation;
+package com.msec2016.ReversePolishNotation;
 
 import net.mightypork.rcalc.IToken;
-import net.mightypork.rcalc.ParseError;
 import net.mightypork.rcalc.TokenList;
 import net.mightypork.rcalc.Tokenizer;
 import net.mightypork.rcalc.numbers.Fraction;
 import net.mightypork.rcalc.tokens.*;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
 
 /**
  * Created by miao on 2016/9/11.
  */
 public class ReversePolishNotationWithToken {
-
-    /**
-     * Tokenizer instance
-     */
-    private Tokenizer tokenizer = new Tokenizer();
-
-
-    private class TokenOperatorBase implements IOperatorToken {
-
-        @Override
-        public TokenList wrapInTokenList() {
-            return new TokenList(this);
-        }
-
-    }
 
     /**
      * use IToken not IOperatorToken,for TokenParenthesisLeft/Right is not IOperatorToken
@@ -46,12 +32,14 @@ public class ReversePolishNotationWithToken {
             put(TokenParenthesisRight.class, 0); //deal with parenthesis separately
         }
     };
-
+    /**
+     * Tokenizer instance
+     */
+    private Tokenizer tokenizer = new Tokenizer();
 
     static boolean operationHigher(IToken a, IToken b) {
         return operationPriority.get(a.getClass()) > operationPriority.get(b.getClass());
     }
-
 
     public static void main(String[] args) {
 
@@ -88,7 +76,6 @@ public class ReversePolishNotationWithToken {
 
 
     }
-
 
     /**
      * RPN solver
@@ -147,7 +134,6 @@ public class ReversePolishNotationWithToken {
         return fracStack.pop();
     }
 
-
     public TokenList rpnParseToken2FrationAndOperator(String inputStr) {
 
         String input = tokenizer.formatStr(inputStr);
@@ -158,7 +144,6 @@ public class ReversePolishNotationWithToken {
 
         return rpnParseToken2FrationAndOperator(tokenList);
     }
-
 
     private TokenList rpnParseToken2FrationAndOperator(TokenList list) {
         Stack<IToken> operationStack = new Stack<>();   //
@@ -199,6 +184,15 @@ public class ReversePolishNotationWithToken {
 
         return rpnList;
 
+
+    }
+
+    private class TokenOperatorBase implements IOperatorToken {
+
+        @Override
+        public TokenList wrapInTokenList() {
+            return new TokenList(this);
+        }
 
     }
 

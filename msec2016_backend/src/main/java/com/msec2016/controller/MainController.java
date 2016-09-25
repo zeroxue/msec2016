@@ -1,7 +1,7 @@
 package com.msec2016.controller;
 
-import com.msec2016.model.Problem;
-import com.msec2016.service.ProblemGeneratorAndSolver;
+import com.msec2016.expression.ProGenAndSolver;
+import com.msec2016.expression.Problem;
 import com.msec2016.test.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class MainController {
     Logger logger = Logger.getLogger("MainController");
 
-    ProblemGeneratorAndSolver pgas = ProblemGeneratorAndSolver.INSTANCE;
+    ProGenAndSolver proGenAndSolver = new ProGenAndSolver();
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
@@ -41,20 +41,11 @@ public class MainController {
     @RequestMapping("newProblem")
     @ResponseBody
     public Object returnNewProblem() {
-        Problem p = pgas.newProblem();
-        pgas.solve(p);
+        List<Problem> problemList = proGenAndSolver.get_Int_AddOp_Problems(1);
 
-        return p;
-    }
+        problemList = proGenAndSolver.solveAll();
 
-
-    @RequestMapping("newProblemInt")
-    @ResponseBody
-    public Object returnNewProblemInt() {
-        Problem p = pgas.newProblemJustInt();
-        pgas.solve(p);
-
-        return p;
+        return problemList.get(0);
     }
 
 
@@ -62,8 +53,8 @@ public class MainController {
     @ResponseBody
     public List<Problem> returnNewProblems() {
 
-        List<Problem> ps = pgas.newProblems(10);
-        pgas.solveAll(ps);
+        List<Problem> ps = proGenAndSolver.get_Int_AddOp_Problems(10);
+        ps = proGenAndSolver.solveAll();
 
         return ps;
     }
@@ -73,8 +64,8 @@ public class MainController {
     @ResponseBody
     public Object returnNewProblemsInt() {
 
-        List<Problem> ps = pgas.newProblemsJustInt(10);
-        pgas.solveAll(ps);
+        List<Problem> ps = proGenAndSolver.get_Int_AddOp_Problems(10);
+        ps = proGenAndSolver.solveAll();
 
         return ps;
     }
@@ -93,6 +84,7 @@ public class MainController {
     }
 }
 
+@CrossOrigin
 @Controller
 class UrlNotFoundController {
     @RequestMapping("*")

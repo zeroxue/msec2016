@@ -1,4 +1,4 @@
-package net.mightypork.ReversePolishNotation;
+package com.msec2016.ReversePolishNotation;
 
 
 import net.mightypork.rcalc.Tokenizer;
@@ -112,7 +112,7 @@ public class ReversePolishNotation {
      * @param inputStr
      * @return
      */
-    public List<String> rpn(String inputStr) {
+    public List<String> toRPNpresentaion(String inputStr) {
         Stack<Character> operationStack = new Stack<>();
         operationStack.push('@');
 
