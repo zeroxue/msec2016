@@ -30,12 +30,14 @@ public class ExpressionGenTest {
         expressionGen.setDataType(true, false, false);
         expressionGen.setOperatorType(false, false, false, true);
 
+        expressionGen.setOperatorNum(1,4);
+
         Generex generex = expressionGen.getGenerex();
 
 
         List<String> ls = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            ls.add(generex.random(10, 10));
+            ls.add(generex.random());
         }
 
         for (String s : ls) {

@@ -32,75 +32,12 @@ public class NewController {
      *                 boolean addOp, boolean subOp, boolean mulOp, boolean divOp) {
      * @return
      */
-    @RequestMapping(value = "/newProblems/{num}/{datatype}/{optype}", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/newProblems/{num}/{minOpNum}/{maxOpNum}/{datatype}/{optype}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Problem> newProblems(@PathVariable int num, @PathVariable String datatype, @PathVariable String optype) {
-        logger.info("What we really care : asking for " + num + ":" + datatype + "," + optype);
-
-
-        String datatypeNew = "";
-        String optypeNew = "";
-
-
-        datatype = datatype.toLowerCase();
-        if (datatype.contains("int")) {
-            datatypeNew += "1";
-        } else {
-            datatypeNew += "0";
-        }
-
-        if (datatype.contains("fraction")) {
-            datatypeNew += "1";
-        } else {
-            datatypeNew += "0";
-        }
-
-        if (datatype.contains("mixed")) { //in fact,it's a little wrong,for "mixedfraction" contains "fraction"
-            datatypeNew += "1";
-        } else {
-            datatypeNew += "0";
-        }
-
-        optype = optype.toLowerCase();
-
-        if (optype.contains("add")) {
-            optypeNew += "1";
-        }else {
-            optypeNew += "0";
-        }
-        if (optype.contains("sub")) {
-            optypeNew += "1";
-        }else {
-            optypeNew += "0";
-        }
-        if (optype.contains("mul")) {
-            optypeNew += "1";
-        }else {
-            optypeNew += "0";
-        }
-        if (optype.contains("div")) {
-            optypeNew += "1";
-        }else {
-            optypeNew += "0";
-        }
-
-
-        return newProblemsClear(num, datatypeNew, optypeNew);
-
-    }
-
-
-    /**
-     * @param num
-     * @param datatype
-     * @param optype   can be just "+-*#"
-     * @return
-     */
-
-    @RequestMapping(value = "/newProblemsClear/{num}/{datatype}/{optype}", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Problem> newProblemsClear(@PathVariable int num, @PathVariable String datatype, @PathVariable String optype) {
-        String requestFor = "What we really care : asking for " + num + ":" + datatype + "," + optype;
+    public List<Problem> newProblemsClear(@PathVariable int num,@PathVariable int minOpNum,@PathVariable int maxOpNum,
+                                          @PathVariable String datatype, @PathVariable String optype) {
+        String requestFor = "What we really care : asking for " + num + "{" + minOpNum + "," + maxOpNum + "}:" + datatype + "," + optype;
         logger.info(requestFor);
 
 
@@ -110,7 +47,7 @@ public class NewController {
             //return new SomeRtnError(errmsg,requestFor);
             return null;
         }
-        if (optype.matches("[0-1]{4}") == false) {       //ATTENTION,THIS IS A BIG TRICK,since http cannot transport `#` here,so use `@` for `#`
+        if (optype.matches("[0-1]{4}") == false) {
             logger.warning("The optype should be 0000,0001,0010,...  represent `+-*#` ...");
             return null;
         }
@@ -129,7 +66,7 @@ public class NewController {
         if (datatype.charAt(1) == '1') {
             fractionType = true;
         }
-        if (datatype.charAt(2) == '1') { //in fact,it's a little wrong,for "mixedfraction" contains "fraction"
+        if (datatype.charAt(2) == '1') {
             mixedFrationType = true;
         }
 
@@ -144,12 +81,12 @@ public class NewController {
         if (optype.charAt(2) == '1') {
             mulOp = true;
         }
-        if (optype.charAt(3) == '1') { //ATTENTION,THIS IS A BIG TRICK,since http cannot transport `#` here,so use `@` for `#`
+        if (optype.charAt(3) == '1') {
             divOp = true;
         }
 
 
-        List<Problem> problemList = proGenAndSolver.get_whatever_you_nee_Problems(num, 10, 10,
+        List<Problem> problemList = proGenAndSolver.get_whatever_you_nee_Problems(num, minOpNum, maxOpNum,
                 intType, fractionType, mixedFrationType,
                 addOp, subOp, mulOp, divOp);
 

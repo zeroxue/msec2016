@@ -9,7 +9,8 @@ public class ExpressionGen implements IExpressionGen {
 
     private String dataType = "";
     private String operatorType = "";
-
+    private int minOpNum = 0;
+    private int maxOpNum = 0;
 
     public String addNewType(String originalType, String newType) {
         if (originalType.isEmpty()) {
@@ -25,8 +26,9 @@ public class ExpressionGen implements IExpressionGen {
 
         dataType = "";//every update will delete the former one
 
-        String integer = "[1-9]\\d{0,2}";
-        String justFrac = "\\(" + integer + "/" + integer + "\\)"; // fraction,the numerator and denominator should not be too big
+        String integer = "[1-9]\\d{0,1}";   //the num is just small enough.(1 - 91)
+        //String justFrac = "\\(" + integer + "/" + integer + "\\)"; // fraction,the numerator and denominator should not be too big
+        String justFrac = integer + "/" + integer;
         String mixedFrac = integer + "'" + justFrac;
 
 
@@ -66,11 +68,17 @@ public class ExpressionGen implements IExpressionGen {
         }
     }
 
+    @Override
+    public void setOperatorNum(int minOpNum, int maxOpNum) {
+        this.minOpNum = minOpNum;
+        this.maxOpNum = maxOpNum;
+    }
+
 
     public Generex getGenerex() {
 
 
-        String reStr = dataType + "(" + operatorType + dataType + ")+";
+        String reStr = dataType + "(" + operatorType + dataType + "){" + minOpNum + "," + maxOpNum + "}";
 
         return new Generex(reStr);
     }

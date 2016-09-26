@@ -40,19 +40,21 @@ public class ProGenAndSolver implements IProGenAndSolver {
     }
 
     @Override
-    public List<Problem> get_whatever_you_nee_Problems(int num, int minlen, int maxlen,
+    public List<Problem> get_whatever_you_nee_Problems(int num, int minOpNum, int maxOpNum,
                                                        boolean intType, boolean fractionType, boolean mixedFrationType,
                                                        boolean addOp, boolean subOp, boolean mulOp, boolean divOp) {
 
         expressionGen.setDataType(intType, fractionType, mixedFrationType);
         expressionGen.setOperatorType(addOp, subOp, mulOp, divOp);
 
+        expressionGen.setOperatorNum(minOpNum, maxOpNum);
+
         Generex generex = expressionGen.getGenerex();
 
 
         problemList.clear(); // clear before use
         for (int i = 0; i < num; i++) {
-            problemList.add(new Problem(generex.random(minlen, maxlen)));
+            problemList.add(new Problem(generex.random()));
         }
 
 

@@ -42,7 +42,7 @@ public class ProGenAndSolverTest {
     @Test
     public void get_whatever_you_nee_ProblemsTest() {
 
-        List<Problem> problemList = proGenAndSolver.get_whatever_you_nee_Problems(100, 1000, 1520,
+        List<Problem> problemList = proGenAndSolver.get_whatever_you_nee_Problems(100, 2, 10,
                 true, true, true,
                 true, true, true, true
         );

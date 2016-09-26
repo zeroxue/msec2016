@@ -12,5 +12,7 @@ public interface IExpressionGen {
 
     void setOperatorType(boolean addOp, boolean subOp, boolean mulOp, boolean divOp);
 
+    void setOperatorNum(int minOpNum,int maxOpNum);
+
     Generex getGenerex();
 }
