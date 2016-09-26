@@ -64,16 +64,24 @@ public class NewController {
         optype = optype.toLowerCase();
 
         if (optype.contains("add")) {
-            optypeNew += "+";
+            optypeNew += "1";
+        }else {
+            optypeNew += "0";
         }
         if (optype.contains("sub")) {
-            optypeNew += "\\+";
+            optypeNew += "1";
+        }else {
+            optypeNew += "0";
         }
         if (optype.contains("mul")) {
-            optypeNew += "*";
+            optypeNew += "1";
+        }else {
+            optypeNew += "0";
         }
         if (optype.contains("div")) {
-            optypeNew += "@";  //ATTENTION,THIS IS A BIG TRICK,since http cannot transport `#` here,so use `@` for `#`
+            optypeNew += "1";
+        }else {
+            optypeNew += "0";
         }
 
 
@@ -102,8 +110,8 @@ public class NewController {
             //return new SomeRtnError(errmsg,requestFor);
             return null;
         }
-        if (optype.matches("[+\\-*@]{1,4}") == false) {       //ATTENTION,THIS IS A BIG TRICK,since http cannot transport `#` here,so use `@` for `#`
-            logger.warning("The optype should be +,-,*,@,+-,...");
+        if (optype.matches("[0-1]{4}") == false) {       //ATTENTION,THIS IS A BIG TRICK,since http cannot transport `#` here,so use `@` for `#`
+            logger.warning("The optype should be 0000,0001,0010,...  represent `+-*#` ...");
             return null;
         }
 
@@ -127,16 +135,16 @@ public class NewController {
 
         optype = optype.toLowerCase();
 
-        if (optype.contains("+")) {
+        if (optype.charAt(0) == '1') {
             addOp = true;
         }
-        if (optype.contains("-")) {
+        if (optype.charAt(1) == '1') {
             subOp = true;
         }
-        if (optype.contains("*")) {
+        if (optype.charAt(2) == '1') {
             mulOp = true;
         }
-        if (optype.contains("@")) { //ATTENTION,THIS IS A BIG TRICK,since http cannot transport `#` here,so use `@` for `#`
+        if (optype.charAt(3) == '1') { //ATTENTION,THIS IS A BIG TRICK,since http cannot transport `#` here,so use `@` for `#`
             divOp = true;
         }
 
