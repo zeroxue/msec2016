@@ -6,7 +6,7 @@ This is the entrance to all of our projects for mesc2016.
 
 陈岩：https://github.com/cyydmlrs
 
-刘菀姝：https://github.com/Lemonsterming
+刘莞姝：https://github.com/Lemonsterming
 
 刘康宁：https://github.com/zeroxue
 
