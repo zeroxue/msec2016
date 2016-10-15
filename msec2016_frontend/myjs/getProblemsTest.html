@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="../js/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" src="getProblemsWithPromise.js"></script>
+        <script type="text/javascript" src="test.js"></script>
+        <script src="done_promises.js"></script>
+    </head>
+    
+    <body>
+    
+        
+        <button onclick="new2()">test get user</button>
+        <button onclick="newProblems()">test get problems</button>
+        <p>hasjdhfj</p>
+        
+        
+        
+    </body>
+    
+    
+    <script>
+            
+        var dp = getProblemsPromise;
+        
+        $.when(dp.getProblems())
+        .done(function(data){
+            //alert(data);
+            console.log("we got at promise,",data)
+            for(let p of data){
+               alert("why"+"\n"+p.definition+"\n"+p.answer);
+            }            
+        })
+        .fail(function(){
+            alert("We fail!");
+        })
+        
+//        var u = getUserPromise;
+//        $.when(u.user()).done(function(data){
+//            alert(data);
+//        })
+        
+    </script>
+    
+</html>

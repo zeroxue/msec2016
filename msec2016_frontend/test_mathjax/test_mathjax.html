@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MathJax TeX Test Page</title>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']],
+            processEscapes: true
+  }
+  });
+  
+</script>
+<!--
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+-->
+    
+<script src="../js/jquery-3.1.1.min.js"></script>
+    
+<script src="../js/MathJax-master/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<!--    <script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+    
+    
+<script src="../myjs/getProblemsWithPromise.js"></script>
+    
+</head>
+    
+    
+<style>
+
+    
+    
+button{
+    position: absolute;
+    margin: 10px;
+    background-color: aqua;
+    height: 50px;
+    width: 20%;
+}
+    
+    
+#myDiv{
+    position: relative;
+    margin: 10px;
+    padding: 30px;
+    height: 200px;
+    width: 50%;
+    background-color: aquamarine;
+    font-family: "微软雅黑 Light";
+    font-size: 50px;
+}
+    
+    
+</style>
+    
+<body>
+    
+    <script>
+        
+        
+    function updateMathContent(s) {
+       var math = MathJax.Hub.getAllJax("myDiv")[0];
+    //       MathJax.Hub.Queue(["Text", math, "\\displaystyle{"+s+"}"]);
+        MathJax.Hub.Queue(["Text", math, s]);
+    }
+
+
+function changeit(){
+    var dp = getProblemsPromise;
+    $.when(dp.getProblems("/1/4/4/100/1000"))
+    .done(function(data){
+        //alert(data);
+        console.log("we got at promise,",data)
+        for(let p of data){
+           //alert("why"+"\n"+p.definition+"\n"+p.answer);
+            updateMathContent(p.definition+"="+p.answer);
+        }            
+    })
+    .fail(function(){
+        alert("We fail!");
+    })
+}
+
+        
+        
+</script>
+    
+    
+    
+<div id="myDiv">为你准备的题目：  \(\rm\TeX\)</div>
+
+    
+<button id="changeMyDiv" onclick=changeit()>再来一次！</button>
+
+
+</body>
+</html>

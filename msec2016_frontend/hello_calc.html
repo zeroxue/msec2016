@@ -4,6 +4,18 @@
         <title>四则运算程序</title>
 <!--        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>-->
         <script src="js/jquery-3.1.1.min.js"></script>
+    
+        
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+<!--
+    <script type="text/javascript" async
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+    </script>
+-->
+    <script src="js/MathJax-master/MathJax.js?config=TeX-AMS_CHTML"></script>
+        
         
     </head>
 
@@ -14,10 +26,18 @@
             
             <p>Good Luck & Have fun</p>
             
+            <p>test mathjax:When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
+$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$</p>
+            
             <p><span></span><input type="button" value="get problem"  onClick="newProblems()" /></p>
+            <p><span></span><input type="button" value="get problem"  onClick="app()" /></p>
+            
+            <p class="append_math">hahah</p>
             
         </div>
     </body>
+    
+    
     
     
     <script>
@@ -25,6 +45,10 @@
         //var our_project_base_url = "http://localhost:9900/"
         var our_project_base_url = "http://demo.tjuwork.win:9000/" //远程服务器
         
+    
+        function app(){
+            $("p.append_math").append("\(ax^2 + bx + c = 0\)");
+        }
         
         
      function getUser(){
@@ -61,6 +85,35 @@
                 });
             });
      };
+    
+        
+    function newProblems2(){
+
+          $(document).ready(function() {
+                $.ajax({
+                    url: our_project_base_url+"/newProblems/1/1/2/100/1000"
+                }).then(function(problems, status, jqxhr) {
+
+                for(let p of problems){
+                   //alert(\(p.definition)\ + "\n" + \(p.answer)\)
+                    
+                    a = p.definition;
+                    
+                    alert(a)
+                    console.log(a)
+                    $("p.append_math").html("\(ax^2 + bx + c = 0\)");
+//                    $("p.append_math").css("background-color","red");
+                    
+                }
+
+
+                console.log(jqxhr);
+                });
+            });
+     };
+        
+        
+        
         
     </script>
     
