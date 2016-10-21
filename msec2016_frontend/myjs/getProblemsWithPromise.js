@@ -1,5 +1,5 @@
 'use strict';
-var our_project_base_url = "http://demo.tjuwork.win:9000/" //远程服务器
+var our_project_base_url = "http://demo.tjuwork.win:9000/api" //远程服务器
 
 
 var getUserPromise = {
