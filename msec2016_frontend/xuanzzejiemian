@@ -1,0 +1,70 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<!-- #BeginEditable "doctitle" -->
+<title>学习网</title>
+<!-- #EndEditable -->
+<script language="JavaScript">
+<!--
+function FP_preloadImgs() {//v1.0
+ var d=document,a=arguments; if(!d.FP_imgs) d.FP_imgs=new Array();
+ for(var i=0; i<a.length; i++) { d.FP_imgs[i]=new Image; d.FP_imgs[i].src=a[i]; }
+}
+
+function FP_swapImg() {//v1.0
+ var doc=document,args=arguments,elm,n; doc.$imgSwaps=new Array(); for(n=2; n<args.length;
+ n+=2) { elm=FP_getObjectByID(args[n]); if(elm) { doc.$imgSwaps[doc.$imgSwaps.length]=elm;
+ elm.$src=elm.src; elm.src=args[n+1]; } }
+}
+
+function FP_getObjectByID(id,o) {//v1.0
+ var c,el,els,f,m,n; if(!o)o=document; if(o.getElementById) el=o.getElementById(id);
+ else if(o.layers) c=o.layers; else if(o.all) el=o.all[id]; if(el) return el;
+ if(o.id==id || o.name==id) return o; if(o.childNodes) c=o.childNodes; if(c)
+ for(n=0; n<c.length; n++) { el=FP_getObjectByID(id,c[n]); if(el) return el; }
+ f=o.forms; if(f) for(n=0; n<f.length; n++) { els=f[n].elements;
+ for(m=0; m<els.length; m++){ el=FP_getObjectByID(id,els[n]); if(el) return el; } }
+ return null;
+}
+// -->
+</script>
+</head>
+
+<body bgcolor="#FFFF99" style="background-attachment: fixed" onload="FP_preloadImgs(/*url*/'button11.jpg', /*url*/'button12.jpg')">
+
+<table border="1" width="1267" height="172">
+	<tr>
+		<td height="108" width="1257" bordercolor="#FFFFFF">
+		<p align="left"><b><font size="7" color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		小学生四则运算加油站</font></b></td>
+	</tr>
+	<tr>
+		<td height="56" width="1257" bordercolor="#FFFFFF">
+		<font size="6" color="#66FF66">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		天才就是1%的灵感加上99%的汗水 --爱迪生</font></td>
+	</tr>
+</table>
+<table border="1" width="1269" height="122">
+	<tr>
+		<td height="116" width="1259"><font size="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		人机模式:只进行加减运算 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="index.htm">
+		<img border="0" id="img1" src="button10.jpg" height="33" width="100" alt="进行练习" fp-style="fp-btn: Glow Tab 3; fp-font: SimSun-ExtB" fp-title="进行练习" onmouseover="FP_swapImg(1,0,/*id*/'img1',/*url*/'button11.jpg')" onmouseout="FP_swapImg(0,0,/*id*/'img1',/*url*/'button10.jpg')" onmousedown="FP_swapImg(1,0,/*id*/'img1',/*url*/'button12.jpg')" onmouseup="FP_swapImg(0,0,/*id*/'img1',/*url*/'button11.jpg')"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<img border="0" src="20150606112114_jZTYF_thumb_700_0.jpg" width="88" height="86"></td>
+	</tr>
+</table>
+<table border="1" width="1268" height="180">
+	<tr>
+		<td height="174" width="1258"><font size="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		匹配模式：进行加减乘除运算</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="index.htm">
+		<img border="0" id="img2" src="button10.jpg" height="33" width="100" alt="进行练习" fp-style="fp-btn: Glow Tab 3; fp-font: SimSun-ExtB; fp-orig: 0" fp-title="进行练习" onmouseover="FP_swapImg(1,0,/*id*/'img2',/*url*/'button11.jpg')" onmouseout="FP_swapImg(0,0,/*id*/'img2',/*url*/'button10.jpg')" onmousedown="FP_swapImg(1,0,/*id*/'img2',/*url*/'button12.jpg')" onmouseup="FP_swapImg(0,0,/*id*/'img2',/*url*/'button11.jpg')"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<img border="0" src="20150606112533_TGiWv_thumb_700_0.jpg" width="102" height="96"></td>
+	</tr>
+</table>
+
+</body>
+
+</html>
